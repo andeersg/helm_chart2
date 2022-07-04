@@ -90,7 +90,7 @@ spec:
           - name: GIT_SYNC_SSH
             value: "true"
           securityContext:
-            runAsUser: 0
+            runAsUser: 65533
         {{- if .Values.certificates.customCAs }}
         - name: certificates
           image: {{ template "certificates.image" . }}
@@ -218,7 +218,7 @@ spec:
           {{- end }}
         - name: git-secret
           secret:
-            defaultMode: 256
+            defaultMode: 0400
             secretName: git-pull-secret
         {{- if .Values.extraVolumes }}
         {{- include "tplvalues.render" (dict "value" .Values.extraVolumes "context" $) | nindent 8 }}
