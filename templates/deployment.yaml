@@ -92,7 +92,7 @@ spec:
           - name: GIT_KNOWN_HOSTS
             value: "false"
           securityContext:
-            runAsUser: {{ .Values.containerSecurityContext.runAsUser }}
+            runAsUser: 0
         {{- if .Values.certificates.customCAs }}
         - name: certificates
           image: {{ template "certificates.image" . }}
