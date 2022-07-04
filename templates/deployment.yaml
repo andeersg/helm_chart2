@@ -75,6 +75,7 @@ spec:
           - name: drupal-data
             mountPath: /var/www/html
           - name: git-secret
+            mountPath: /etc/git-secret
             secret:
               secretName: git-pull-secret
           env:
