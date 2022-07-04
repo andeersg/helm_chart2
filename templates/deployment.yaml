@@ -65,8 +65,6 @@ spec:
           volumeMounts:
           - name: drupal-data
             mountPath: /var/www/html
-          - name: git-secret
-            mountPath: /etc/git-secret
         {{- end }}
         - name: git_deploy
           image: k8s.gcr.io/git-sync-amd64:v2.0.6
