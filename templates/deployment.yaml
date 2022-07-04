@@ -79,9 +79,9 @@ spec:
               secretName: git-pull-secret
           env:
           - name: GIT_SYNC_REPO
-            value: {{ .Values.projecrt.repository | quote }}
+            value: {{ .Values.project.repository | quote }}
           - name: GIT_SYNC_BRANCH
-            value: {{ .Values.projecrt.branch | quote }}
+            value: {{ .Values.project.branch | quote }}
           - name: GIT_SYNC_ROOT
             value: '/var/www/html'
           - name: GIT_SYNC_DEST
