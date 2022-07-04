@@ -92,7 +92,8 @@ spec:
           - name: GIT_KNOWN_HOSTS
             value: "false"
           securityContext:
-            runAsUser: 65533
+            runAsUser: 1001
+            runAsGroup: 1001
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
