@@ -72,6 +72,8 @@ spec:
           volumeMounts:
           - name: drupal-data
             mountPath: /var/www/html
+          - name: git-secret
+            mountPath: /etc/git-secret
           env:
           - name: GIT_SYNC_REPO
             value: {{ .Values.project.repository | quote }}
@@ -214,6 +216,10 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+        - name: git-secret
+          secret:
+            defaultMode: 256
+            secretName: git-pull-secret
         {{- if .Values.extraVolumes }}
         {{- include "tplvalues.render" (dict "value" .Values.extraVolumes "context" $) | nindent 8 }}
         {{- end }}
