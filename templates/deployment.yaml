@@ -67,7 +67,7 @@ spec:
             mountPath: /var/www/html
         {{- end }}
         - name: git-deploy
-          image: k8s.gcr.io/git-sync-amd64:v2.0.6
+          image:  k8s.gcr.io/git-sync/git-sync:v3.5.0
           imagePullPolicy: Always
           volumeMounts:
           - name: drupal-data
