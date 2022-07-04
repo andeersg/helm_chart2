@@ -89,6 +89,8 @@ spec:
             value: "true"
           - name: GIT_SYNC_SSH
             value: "true"
+          - name: GIT_KNOWN_HOSTS
+            value: "false"
           securityContext:
             runAsUser: 65533
         {{- if .Values.certificates.customCAs }}
