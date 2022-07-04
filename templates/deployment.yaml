@@ -92,7 +92,11 @@ spec:
           - name: GIT_KNOWN_HOSTS
             value: "false"
           securityContext:
-            runAsUser: 0
+            runAsUser: 65533
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["all"]
         {{- if .Values.certificates.customCAs }}
         - name: certificates
           image: {{ template "certificates.image" . }}
