@@ -75,9 +75,7 @@ spec:
           - name: drupal-data
             mountPath: /var/www/html
           - name: git-secret
-            mountPath: /etc/git-secret
-            secret:
-              secretName: git-pull-secret
+            mountPath: /etc/git-secret/ssh
           env:
           - name: GIT_SYNC_REPO
             value: {{ .Values.project.repository | quote }}
@@ -93,6 +91,8 @@ spec:
             value: "true"
           - name: GIT_SYNC_SSH
             value: "true"
+          - name: GIT_SSH_KEY_FILE
+            value: "/etc/git-secret/ssh"
           securityContext:
             runAsUser: 0
         {{- if .Values.certificates.customCAs }}
@@ -220,6 +220,10 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+        - name: git-secret
+          secret:
+            secretName: git-pull-secret
+            defaultMode: 288
         {{- if .Values.extraVolumes }}
         {{- include "tplvalues.render" (dict "value" .Values.extraVolumes "context" $) | nindent 8 }}
         {{- end }}
