@@ -218,7 +218,7 @@ spec:
           {{- end }}
         - name: git-secret
           secret:
-            defaultMode: 0400
+            defaultMode: 256
             secretName: git-pull-secret
         {{- if .Values.extraVolumes }}
         {{- include "tplvalues.render" (dict "value" .Values.extraVolumes "context" $) | nindent 8 }}
