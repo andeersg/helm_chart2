@@ -94,10 +94,6 @@ spec:
           securityContext:
             runAsUser: 1001
             runAsGroup: 1001
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            capabilities:
-              drop: ["all"]
         {{- if .Values.certificates.customCAs }}
         - name: certificates
           image: {{ template "certificates.image" . }}
