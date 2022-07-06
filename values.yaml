@@ -36,10 +36,11 @@ project:
 
 
 image:
-  repository: webdevops/php-nginx
+  registry: ghcr.io
+  repository: bouvet/drupal-images/webserver
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "7.4"
+  tag: "main"
 
 imagePullSecrets:
   - name: ghcr-secret

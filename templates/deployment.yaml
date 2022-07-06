@@ -29,8 +29,8 @@ spec:
         {{- end }}
     spec:
       #{{- include "drupal.imagePullSecrets" . | nindent 6 }}
-      # imagePullSecrets:
-      #   - name: ghcr-secret
+      imagePullSecrets:
+        - name: ghcr-secret
       {{- if .Values.podSecurityContext.enabled }}
       securityContext: {{- omit .Values.podSecurityContext "enabled" | toYaml | nindent 8 }}
       {{- end }}
@@ -66,34 +66,21 @@ spec:
           - name: drupal-data
             mountPath: /var/www/html
         {{- end }}
-        - name: git-deploy
-          image:  k8s.gcr.io/git-sync/git-sync:v3.5.0
+        - name: deploy
+          image:  ghcr.io/bouvet/drupal-images/deploy:main
           imagePullPolicy: Always
           volumeMounts:
-          - name: drupal-data
-            mountPath: /var/www/html
+          - name: drupal-workdir
+            mountPath: /workdir
           - name: git-secret
             mountPath: /etc/git-secret
           env:
-          - name: GIT_SYNC_REPO
+          - name: GIT_REPO
             value: {{ .Values.project.repository | quote }}
-          - name: GIT_SYNC_BRANCH
+          - name: GIT_BRANCH
             value: {{ .Values.project.branch | quote }}
-          - name: GIT_SYNC_ROOT
-            value: '/var/www/html'
-          - name: GIT_SYNC_DEST
-            value: project
-          - name: GIT_SYNC_PERMISSIONS
-            value: "0777"
-          - name: GIT_SYNC_ONE_TIME
-            value: "true"
-          - name: GIT_SYNC_SSH
-            value: "true"
-          - name: GIT_KNOWN_HOSTS
-            value: "false"
           securityContext:
-            runAsUser: 65533
-            runAsGroup: 1001
+            runAsUser: 0
         {{- if .Values.certificates.customCAs }}
         - name: certificates
           image: {{ template "certificates.image" . }}
@@ -210,7 +197,9 @@ spec:
           {{- end }}
           volumeMounts:
             - name: drupal-data
-              mountPath: /var/www/html/web/sites/default/files
+              mountPath: /storage/files
+            - name: drupal-workdir
+              mountPath: /workdir
       volumes:
         - name: drupal-data
           {{- if .Values.persistence.enabled }}
