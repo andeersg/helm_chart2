@@ -81,7 +81,7 @@ spec:
             value: {{ .Values.project.branch | quote }}
           securityContext:
             runAsNonRoot: true
-            runAsUser: 999
+            runAsUser: 1002
         {{- if .Values.certificates.customCAs }}
         - name: certificates
           image: {{ template "certificates.image" . }}
