@@ -208,6 +208,8 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+        - name: drupal-workdir
+          emptyDir: {}
         - name: git-secret
           secret:
             defaultMode: 256
